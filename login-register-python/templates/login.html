@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <!-- Fontawesome cdn -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <!-- Font Family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- My CSS -->
+    <style>
+      .button-submit {
+        background-color: #756ab6;
+        color: white;
+        transition: 0.3s;
+        height: 50px;
+        font-size: 18px;
+      }
+
+      .button-submit:hover {
+        background-color: #ac87c5;
+        color: white;
+      }
+
+      input {
+        height: 50px;
+        font-size: 17px;
+      }
+
+      .form-control::placeholder {
+        color: #756ab6;
+        font-size: 17px;
+      }
+    </style>
+  </head>
+
+  <body
+    style="
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      background-color: #ffe5e5;
+    "
+  >
+    <div
+      class="container-fluid d-flex justify-content-center align-items-center"
+      style="height: 100vh"
+    >
+      <div
+        class="container shadow p-5 rounded"
+        style="width: 600px; background-color: white"
+      >
+        <h1 class="text-center" style="font-weight: 700; color: #756ab6">
+          Login
+        </h1>
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            const flashMessage = "{{ messages[0] }}";
+            const messageCategory = "{{ messages[0] }}".slice(-1);
+            let status;
+            if (messageCategory == "f") {
+              status = "error";
+            } else if (messageCategory == "t") {
+              status = "success";
+            } else if (messageCategory == "w") {
+              status = "warning";
+            } else if (messageCategory == "i") {
+              status = "info";
+            }
+            if (flashMessage) {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                },
+              });
+              Toast.fire({
+                icon: status,
+                title: flashMessage.slice(0, -1),
+              });
+            }
+          });
+        </script>
+        {% endif %} {% endwith %}
+        <form method="post" action="{{ url_for('login') }}">
+          <div class="form-group mb-4 mt-5 d-flex">
+            <input
+              type="text"
+              class="form-control"
+              id="identifier"
+              name="identifier"
+              autocomplete="off"
+              style="color: #756ab6"
+              placeholder="Username or NPM"
+              required
+            />
+            <div
+              style="
+                background-color: #756ab6;
+                border-radius: 0px 6px 6px 0px;
+                margin-left: -60px;
+              "
+              class="d-flex justify-content-center align-items-center p-3"
+            >
+              <i class="fa-solid fa-user fa-2xl text-light"></i>
+            </div>
+          </div>
+          <div class="form- mb-5 d-flex">
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              autocomplete="off"
+              style="color: #756ab6"
+              name="password"
+              placeholder="Your password"
+              required
+            />
+            <div
+              class="d-flex justify-content-center align-items-center p-3"
+              style="
+                background-color: #756ab6;
+                border-radius: 0px 6px 6px 0px;
+                margin-left: -60px;
+              "
+            >
+              <i class="fa-solid fa-lock fa-2xl text-light"></i>
+            </div>
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn button-submit">
+              Login<i class="fa-solid fa-right-to-bracket fa-lg ms-2"></i>
+            </button>
+          </div>
+        </form>
+        <p class="mt-4 text-center">
+          Don't have an account?
+          <a href="{{ url_for('register') }}" style="text-decoration: none"
+            >Register here</a
+          >
+        </p>
+      </div>
+    </div>
+    <!-- Bootstrap JavaScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
